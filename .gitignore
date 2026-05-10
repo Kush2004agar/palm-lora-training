@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+lora_env/
+
+# Training artifacts
+output/
+logs/
+generated_palms/
+palm_dataset/
+
+# OS and editor
+.DS_Store
+Thumbs.db

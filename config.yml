@@ -1,0 +1,48 @@
+# LoRA Training Configuration
+
+model:
+  pretrained_model: "runwayml/stable-diffusion-v1-5"
+  # Alternative: "stabilityai/stable-diffusion-xl-base-1.0" for SDXL
+
+data:
+  data_dir: "./palm_dataset/10_palm"
+  resolution: 512
+  caption_style: "simple"  # simple, detailed, descriptive
+
+training:
+  batch_size: 2
+  num_epochs: 25
+  learning_rate: 0.0001
+  lr_scheduler: "cosine"
+  lr_warmup_steps: 500
+  gradient_accumulation_steps: 1
+  max_grad_norm: 1.0
+  mixed_precision: "fp16"  # fp16, bf16, or no
+  seed: 42
+
+lora:
+  rank: 32
+  alpha: 32
+  dropout: 0.0
+  target_modules:
+    - "to_k"
+    - "to_q"
+    - "to_v"
+    - "to_out.0"
+
+output:
+  output_dir: "./output"
+  logging_dir: "./logs"
+  save_every_n_epochs: 2
+  save_model_as: "safetensors"  # safetensors or pt
+
+generation:
+  num_images: 54000  # To reach 60k with your 6k originals
+  output_dir: "./generated_palms"
+  num_inference_steps: 50
+  guidance_scale: 7.5
+  negative_prompt: "blurry, deformed, extra fingers, bad anatomy, low quality, ugly hands"
+
+hardware:
+  num_workers: 4
+  use_wandb: false
